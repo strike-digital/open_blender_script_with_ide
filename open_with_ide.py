@@ -43,6 +43,10 @@ def update_text_timer():
     else if the ide has saved a new version of the file, load that"""
     global file
     global op
+
+    if not op.bl_text_data:
+        return update_text_timer.redraw_interval
+
     try:
         new_text = op.bl_text_data.as_string()
     except ReferenceError:
@@ -156,5 +160,4 @@ def unregister():
 
     for file in Path(tempfile.gettempdir()).iterdir():
         if file.name.startswith("bl_ide_temp_"):
-            print(file)
             os.remove(file)
